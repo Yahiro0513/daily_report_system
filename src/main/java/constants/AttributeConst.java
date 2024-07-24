@@ -49,8 +49,12 @@ public enum AttributeConst {
     REP_DATE("report_date"),
     REP_TITLE("title"),
     REP_CONTENT("content_msg"),
-    REP_WORKED("worked"),
-    REP_OFFWORKED("offworked");
+    REP_WORKED_DATE("worked_date"),
+    REP_OFFWORKED_DATE("offworked_date"),
+    REP_WORKED_TIME("worked_time"),
+    REP_OFFWORKED_TIME("offworked_time");
+
+
 
     private final String text;
     private final Integer i;

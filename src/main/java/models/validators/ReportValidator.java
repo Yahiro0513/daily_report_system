@@ -1,5 +1,7 @@
 package models.validators;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,17 +33,23 @@ public class ReportValidator {
             errors.add(contentError);
         }
 
-        //出勤時間のチェック
-        String workedError = validateWorked(rv.getWorked());
+        //日けのチェック
+        String workedError=validateWorked(rv.getReportDate(),rv.getWorkedDate());
         if (!workedError.equals("")) {
             errors.add(workedError);
         }
-
-        //退勤時間のチェック
-        String offworkedError = validateOffworked(rv.getOffworked());
+        String offworkedError=validateOffworked(rv.getWorkedDate(),rv.getOffworkedDate());
         if (!offworkedError.equals("")) {
             errors.add(offworkedError);
         }
+
+        //出退勤のチェック
+        String timeError=validateTime(rv.getWorkedDate(),rv.getOffworkedDate(),rv.getWorkedTime(),rv.getOffworkedTime());
+        if (!timeError.equals("")) {
+            errors.add(timeError);
+        }
+
+
 
         return errors;
     }
@@ -75,13 +83,32 @@ public class ReportValidator {
     }
 
     /**
-     * 出勤時間に入力値があるかをチェックし、入力値がなければエラーメッセージを返却
-     * @param worked 出勤時間
+     * 日けをチェックし、入力値がなければエラーメッセージを返却
+     * @param worked 出勤
      * @return エラーメッセージ
      */
-    private static String validateWorked(String worked) {
-        if (worked == null || worked.equals("")) {
-            return MessageConst.E_NOTITLE.getMessage();
+    private static String validateWorked(LocalDate day,LocalDate workedDate) {
+
+        if (workedDate.isBefore(day.minusDays(1))) {
+            return MessageConst.E_WRONGWORKEDEARLY.getMessage();
+        }
+        if(workedDate.isAfter(day)) {
+            return MessageConst.E_WRONGWORKEDLATE.getMessage();
+        }
+        //入力値がある場合は空文字を返却
+        return "";
+    }
+
+    /**
+     * 日けをチェックし、入力値がなければエラーメッセージを返却
+     * @param offworked 退勤
+     * @return エラーメッセージ
+     */
+    private static String validateOffworked(LocalDate workedDate,LocalDate offworkedDate) {
+
+        if (workedDate.isAfter(offworkedDate) ) {
+
+            return MessageConst.E_WRONGOFFWORKED.getMessage();
         }
 
         //入力値がある場合は空文字を返却
@@ -89,16 +116,23 @@ public class ReportValidator {
     }
 
     /**
-     * タイトルに入力値があるかをチェックし、入力値がなければエラーメッセージを返却
-     * @param offworke 退勤時間
+     * 出退勤時間をチェックし、エラーメッセージを返却
+     * @param time 出退勤時間
      * @return エラーメッセージ
      */
-    private static String validateOffworked(String offworked) {
-        if (offworked == null || offworked.equals("")) {
-            return MessageConst.E_NOTITLE.getMessage();
-        }
+    private static String validateTime(LocalDate workedDate,LocalDate offworkedDate,LocalTime workedTime,LocalTime offworkedTime) {
 
-        //入力値がある場合は空文字を返却
+//        if(offworkedDate.isBefore(workedDate)) {
+//            return MessageConst.E_WRONGTIME.getMessage();
+//        }
+        if (workedDate.equals(offworkedDate)&&offworkedTime.isBefore(workedTime)) {
+            return MessageConst.E_WRONGTIME.getMessage();
+        }
         return "";
+
+
     }
+
+
+
 }

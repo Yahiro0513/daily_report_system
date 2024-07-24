@@ -29,12 +29,14 @@
 <textarea  name="${AttributeConst.REP_CONTENT.getValue()}" id="${AttributeConst.REP_CONTENT.getValue()}" rows="10" cols="50">${report.content}</textarea>
 <br /><br />
 
-<label for="${AttributeConst.REP_WORKED.getValue()}">出勤時間</label><br />
-<input type="text" name="${AttributeConst.REP_WORKED.getValue()}" id="${AttributeConst.REP_WORKED.getValue()}" value="${report.worked}" />
+<label for="${AttributeConst.REP_WORKED_DATE.getValue()}">出勤時間</label><br />
+<input type="date" name="${AttributeConst.REP_WORKED_DATE.getValue()}" id="${AttributeConst.REP_WORKED_DATE.getValue()}" value="${report.workedDate}" />
+<input type="time" name="${AttributeConst.REP_WORKED_TIME.getValue()}" id="${AttributeConst.REP_WORKED_TIME.getValue()}" value="${report.workedTime}" />
 <br /><br />
 
-<label for="${AttributeConst.REP_OFFWORKED.getValue()}">退勤時間</label><br />
-<input type="text" name="${AttributeConst.REP_OFFWORKED.getValue()}" id="${AttributeConst.REP_OFFWORKED.getValue()}" value="${report.offworked}" />
+<label for="${AttributeConst.REP_OFFWORKED_DATE.getValue()}">退勤時間</label><br />
+<input type="date" name="${AttributeConst.REP_OFFWORKED_DATE.getValue()}" id="${AttributeConst.REP_OFFWORKED_DATE.getValue()}" value="${report.offworkedDate}" />
+<input type="time" name="${AttributeConst.REP_OFFWORKED_TIME.getValue()}" id="${AttributeConst.REP_OFFWORKED_TIME.getValue()}" value="${report.offworkedTime}" />
 <br /><br />
 
 <input type="hidden" name="${AttributeConst.REP_ID.getValue()}" value="${report.id}" />

@@ -22,7 +22,13 @@ public enum MessageConst {
     E_NOEMP_CODE("社員番号を入力してください。"),
     E_EMP_CODE_EXIST("入力された社員番号の情報は既に存在しています。"),
     E_NOTITLE("タイトルを入力してください。"),
-    E_NOCONTENT("内容を入力してください。");
+    E_NOCONTENT("内容を入力してください。"),
+
+    //出勤退勤
+    E_WRONGWORKEDEARLY("出勤日は日報作成日の昨日より前です。"),
+    E_WRONGWORKEDLATE("出勤日は日報作成日の明日以降です。"),
+    E_WRONGOFFWORKED("退勤日は出勤日より前です。"),
+    E_WRONGTIME("退勤時間は出勤時間より前です。");
 
 
     /**

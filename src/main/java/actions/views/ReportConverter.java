@@ -25,8 +25,10 @@ public class ReportConverter {
                 rv.getContent(),
                 rv.getCreatedAt(),
                 rv.getUpdatedAt(),
-                rv.getWorked(),
-                rv.getOffworked());
+                rv.getWorkedDate(),
+                rv.getOffworkedDate(),
+                rv.getWorkedTime(),
+                rv.getOffworkedTime());
     }
 
     /**
@@ -48,8 +50,10 @@ public class ReportConverter {
                 r.getContent(),
                 r.getCreatedAt(),
                 r.getUpdatedAt(),
-                r.getWorked(),
-                r.getOffworked());
+                r.getWorkedDate(),
+                r.getOffworkedDate(),
+                r.getWorkedTime(),
+                r.getOffworkedTime());
     }
 
     /**
@@ -80,9 +84,10 @@ public class ReportConverter {
         r.setContent(rv.getContent());
         r.setCreatedAt(rv.getCreatedAt());
         r.setUpdatedAt(rv.getUpdatedAt());
-        r.setWorked(rv.getWorked());
-        r.setOffworked(rv.getOffworked());
-
+        r.setWorkedDate(rv.getWorkedDate());
+        r.setOffworkedDate(rv.getOffworkedDate());
+        r.setWorkedTime(rv.getWorkedTime());
+        r.setOffworkedTime(rv.getOffworkedTime());
     }
 
 }

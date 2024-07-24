@@ -54,8 +54,7 @@ public class LoginFilter implements Filter {
             //クエリパラメータからactionとcommandを取得
             String action = request.getParameter(ForwardConst.ACT.getValue());
             String command = request.getParameter(ForwardConst.CMD.getValue());
-
-            //セッションからログインしている従業員の情報を取得
+             //セッションからログインしている従業員の情報を取得
             EmployeeView ev = (EmployeeView) session.getAttribute(AttributeConst.LOGIN_EMP.getValue());
 
             if (ev == null) {
@@ -99,7 +98,7 @@ public class LoginFilter implements Filter {
                         return;
 
                     }
-                }
+               }
             }
 
             //次のフィルタまたはサーブレットを呼び出し

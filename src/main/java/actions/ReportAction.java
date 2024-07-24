@@ -2,6 +2,8 @@ package actions;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -101,10 +103,25 @@ public class ReportAction extends ActionBase {
                 day = LocalDate.parse(getRequestParam(AttributeConst.REP_DATE));
             }
 
+
             //セッションからログイン中の従業員情報を取得
             EmployeeView ev = (EmployeeView) getSessionScope(AttributeConst.LOGIN_EMP);
 
             //パラメータの値をもとに日報情報のインスタンスを作成する
+
+            String workedDate;
+            workedDate=getRequestParam(AttributeConst.REP_WORKED_DATE);
+            LocalDate workedDay = LocalDate.parse(workedDate, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+            String offworkedDate;
+            offworkedDate=getRequestParam(AttributeConst.REP_OFFWORKED_DATE);
+            LocalDate offworkedDay = LocalDate.parse(offworkedDate, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+            String workedTime;
+            workedTime=getRequestParam(AttributeConst.REP_WORKED_TIME);
+            LocalTime workedTiming=LocalTime.parse(workedTime, DateTimeFormatter.ofPattern("HH:mm"));
+            String offworkedTime;
+            offworkedTime=getRequestParam(AttributeConst.REP_OFFWORKED_TIME);
+            LocalTime offworkedTiming=LocalTime.parse(offworkedTime, DateTimeFormatter.ofPattern("HH:mm"));
+
             ReportView rv = new ReportView(
                     null,
                     ev, //ログインしている従業員を、日報作成者として登録する
@@ -113,8 +130,10 @@ public class ReportAction extends ActionBase {
                     getRequestParam(AttributeConst.REP_CONTENT),
                     null,
                     null,
-                    getRequestParam(AttributeConst.REP_WORKED),
-                    getRequestParam(AttributeConst.REP_OFFWORKED));
+                    workedDay,
+                    offworkedDay,
+                    workedTiming,
+                    offworkedTiming);
 
             //日報情報登録
             List<String> errors = service.create(rv);
@@ -207,8 +226,10 @@ public class ReportAction extends ActionBase {
             rv.setReportDate(toLocalDate(getRequestParam(AttributeConst.REP_DATE)));
             rv.setTitle(getRequestParam(AttributeConst.REP_TITLE));
             rv.setContent(getRequestParam(AttributeConst.REP_CONTENT));
-            rv.setWorked(getRequestParam(AttributeConst.REP_WORKED));
-            rv.setOffworked(getRequestParam(AttributeConst.REP_OFFWORKED));
+            rv.setWorkedDate(toLocalDate(getRequestParam(AttributeConst.REP_WORKED_DATE)));
+            rv.setOffworkedDate(toLocalDate(getRequestParam(AttributeConst.REP_OFFWORKED_DATE)));
+            rv.setWorkedTime(toLocalTime(getRequestParam(AttributeConst.REP_WORKED_TIME)));
+            rv.setOffworkedTime(toLocalTime(getRequestParam(AttributeConst.REP_OFFWORKED_TIME)));
 
             //日報データを更新する
             List<String> errors = service.update(rv);

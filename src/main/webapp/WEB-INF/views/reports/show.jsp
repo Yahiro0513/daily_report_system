@@ -39,11 +39,11 @@
                 </tr>
                 <tr>
                     <th>出勤時間</th>
-                    <td><pre><c:out value="${report.worked}" /></pre></td>
+                    <td><pre><c:out value="${report.workedDate} ${report.workedTime}" /></pre></td>
                 </tr>
                 <tr>
                     <th>退勤時間</th>
-                    <td><pre><c:out value="${report.offworked}" /></pre></td>
+                    <td><pre><c:out value="${report.offworkedDate} ${report.offworkedTime}" /></pre></td>
                 </tr>
             </tbody>
         </table>

@@ -89,6 +89,7 @@ public class ReportValidator {
      */
     private static String validateWorked(LocalDate day,LocalDate workedDate) {
 
+
         if (workedDate.isBefore(day.minusDays(1))) {
             return MessageConst.E_WRONGWORKEDEARLY.getMessage();
         }
@@ -122,9 +123,6 @@ public class ReportValidator {
      */
     private static String validateTime(LocalDate workedDate,LocalDate offworkedDate,LocalTime workedTime,LocalTime offworkedTime) {
 
-//        if(offworkedDate.isBefore(workedDate)) {
-//            return MessageConst.E_WRONGTIME.getMessage();
-//        }
         if (workedDate.equals(offworkedDate)&&offworkedTime.isBefore(workedTime)) {
             return MessageConst.E_WRONGTIME.getMessage();
         }

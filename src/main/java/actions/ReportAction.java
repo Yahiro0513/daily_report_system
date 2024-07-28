@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -108,19 +109,43 @@ public class ReportAction extends ActionBase {
             EmployeeView ev = (EmployeeView) getSessionScope(AttributeConst.LOGIN_EMP);
 
             //パラメータの値をもとに日報情報のインスタンスを作成する
-
+            List<String> errorsworkedoffworked = new ArrayList<String>();
             String workedDate;
             workedDate=getRequestParam(AttributeConst.REP_WORKED_DATE);
-            LocalDate workedDay = LocalDate.parse(workedDate, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+            LocalDate workedDay=null;
+            try{
+                workedDay = LocalDate.parse(workedDate, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+            }catch(Exception e) {
+                workedDay = LocalDate.now();
+                errorsworkedoffworked.add(MessageConst.E_NONWORKEDDATE.getMessage());
+            }
             String offworkedDate;
             offworkedDate=getRequestParam(AttributeConst.REP_OFFWORKED_DATE);
-            LocalDate offworkedDay = LocalDate.parse(offworkedDate, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+            LocalDate offworkedDay=null;
+            try{
+                offworkedDay= LocalDate.parse(offworkedDate, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+            }catch(Exception e) {
+                offworkedDay = LocalDate.now();
+                errorsworkedoffworked.add(MessageConst.E_NONOFFWORKEDDATE.getMessage());
+            }
             String workedTime;
             workedTime=getRequestParam(AttributeConst.REP_WORKED_TIME);
-            LocalTime workedTiming=LocalTime.parse(workedTime, DateTimeFormatter.ofPattern("HH:mm"));
+            LocalTime workedTiming=null;
+            try{
+                workedTiming=LocalTime.parse(workedTime, DateTimeFormatter.ofPattern("HH:mm"));
+            }catch(Exception e) {
+                workedTiming=LocalTime.parse("00:00", DateTimeFormatter.ofPattern("HH:mm"));
+                errorsworkedoffworked.add(MessageConst.E_NONWORKEDTIME.getMessage());
+            }
             String offworkedTime;
             offworkedTime=getRequestParam(AttributeConst.REP_OFFWORKED_TIME);
-            LocalTime offworkedTiming=LocalTime.parse(offworkedTime, DateTimeFormatter.ofPattern("HH:mm"));
+            LocalTime offworkedTiming=null;
+            try{
+                offworkedTiming=LocalTime.parse(offworkedTime, DateTimeFormatter.ofPattern("HH:mm"));
+            }catch(Exception e) {
+                offworkedTiming=LocalTime.parse("00:00", DateTimeFormatter.ofPattern("HH:mm"));
+                errorsworkedoffworked.add(MessageConst.E_NONOFFWORKEDTIME.getMessage());
+            }
 
             ReportView rv = new ReportView(
                     null,
@@ -137,6 +162,10 @@ public class ReportAction extends ActionBase {
 
             //日報情報登録
             List<String> errors = service.create(rv);
+            if(errorsworkedoffworked.size()>0) {
+                errors.addAll(errorsworkedoffworked);
+                errorsworkedoffworked.clear();
+            }
 
             if (errors.size() > 0) {
                 //登録中にエラーがあった場合

@@ -27,8 +27,12 @@ public enum MessageConst {
     //出勤退勤
     E_WRONGWORKEDEARLY("出勤日は日報作成日の昨日より前です。"),
     E_WRONGWORKEDLATE("出勤日は日報作成日の明日以降です。"),
-    E_WRONGOFFWORKED("退勤日は出勤日より前です。"),
-    E_WRONGTIME("退勤時間は出勤時間より前です。");
+    E_WRONGOFFWORKED("出勤日は退勤日より前にしてください。"),
+    E_WRONGTIME("出勤時間は退勤時間より前にしてください。"),
+    E_NONWORKEDDATE("出勤日を選んでください"),
+    E_NONWORKEDTIME("出勤時間を選んでください"),
+    E_NONOFFWORKEDDATE("退勤日を選んでください"),
+    E_NONOFFWORKEDTIME("退勤時間を選んでください");
 
 
     /**
